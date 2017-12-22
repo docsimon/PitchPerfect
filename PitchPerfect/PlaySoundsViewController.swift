@@ -55,6 +55,7 @@ class PlaySoundsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // The code below is necessary to make the images fit landscape orientation
         slowButton.imageView?.contentMode = .scaleAspectFit
         fastButton.imageView?.contentMode = .scaleAspectFit
         highPitchButton.imageView?.contentMode = .scaleAspectFit

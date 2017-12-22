@@ -25,15 +25,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     @IBAction func recordAudio(_ sender: Any) {
-        self.recordingLabel.text = "Recording in Progressc"
-        self.stopRecordingButton.isEnabled = true
-        self.recordButton.isEnabled = false
+        updateUI("Recording in Progress", recording: false)
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask, true)[0] as String
         let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
         let filePath = URL(string: pathArray.joined(separator: "/"))
-        print(filePath)
-        
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(AVAudioSessionCategoryPlayAndRecord, with:AVAudioSessionCategoryOptions.defaultToSpeaker)
         
@@ -45,26 +41,17 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     @IBAction func stopRecording(_ sender: Any) {
-        self.recordButton.isEnabled = true
-        self.stopRecordingButton.isEnabled = false
-        self.recordingLabel.text = "Tap to Record"
-        
+        updateUI("Tap to Record", recording: true)
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
-
-        
     }
-}
 
-// AVAudio delegate implementation
-extension RecordSoundsViewController {
-    
+
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         
         if flag {
             performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
-            print(audioRecorder.url)
         }else{
             print("Recording was not successful")
         }
@@ -78,5 +65,10 @@ extension RecordSoundsViewController {
         }
     }
 
+    func updateUI(_ label:String, recording: Bool) {
+        self.recordingLabel.text = label
+        self.stopRecordingButton.isEnabled = !recording
+        self.recordButton.isEnabled = recording
+    }
     
 }
