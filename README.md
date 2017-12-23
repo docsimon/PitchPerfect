@@ -2,4 +2,4 @@
 Udacity iOS Nanodegree Pitch Perfect project
 
 This project is about creating a sound app that records a sound and modifies it using the AVFoundation framework.
-The apphas been written in Swift 4, with Xcode 9.2
+The app has been written in Swift 4, with Xcode 9.2
